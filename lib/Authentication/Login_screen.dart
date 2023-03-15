@@ -60,7 +60,7 @@ class _LoginState extends State<Login> {
                     width: MediaQuery.of(context).size.width,
                     child: ElevatedButton(
                         onPressed: ()async{
-                          if(emailconteoller.text.isEmpty||passwordcontoller.text.isEmpty){
+                          if(emailconteoller.text.isEmpty || passwordcontoller.text.isEmpty){
                              ScaffoldMessenger.of(context).showSnackBar(
                                const   SnackBar(
                                    backgroundColor: Colors.greenAccent,
@@ -69,8 +69,7 @@ class _LoginState extends State<Login> {
                                    duration: Duration(seconds: 2),
                                  )
                              );
-                          }
-                          else{
+                          }else {
                             await Authentication().Loginuser(
                                 Email: emailconteoller.text,
                                 password: passwordcontoller.text,
