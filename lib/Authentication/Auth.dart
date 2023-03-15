@@ -15,7 +15,7 @@ import 'package:lostfound/Home/Homepage.dart';
      try {
        user = (await FirebaseAuth.instance.
          createUserWithEmailAndPassword(email: Email, password: password)).user;
-       if(User != null){
+       if(user != null){
          await Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>Homepage()));
          return user;
        }
@@ -41,16 +41,19 @@ import 'package:lostfound/Home/Homepage.dart';
          return user;
        }
        else{
-         const SnackBar(
-           backgroundColor: Colors.greenAccent,
-           content: Text("Invalid credentials",
-           style: TextStyle(color: Colors.red),
-           ),
-           duration: Duration(seconds: 2),
-         );
+       print("No user is created");
        }
      }catch(e){
-       print(e);
+       ScaffoldMessenger.of(context).showSnackBar(
+         const SnackBar(
+           backgroundColor: Colors.greenAccent,
+           content: Text(
+             "Invalid credentials",
+             style: TextStyle(color: Colors.red),
+           ),
+           duration: Duration(seconds: 2),
+         ),
+       );
      }
    }
    Future<User?> signoutuser()async{

@@ -11,10 +11,9 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final Fnamecontroller = TextEditingController();
   final Lnamecontroller = TextEditingController();
-  final emailconteoller = TextEditingController();
+  final emailcontroller = TextEditingController();
   final passwordcontoller = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -61,7 +60,7 @@ class _RegisterState extends State<Register> {
                         Space(),
                         Textfield(
                             text: 'Email',
-                            controller: emailconteoller,
+                            controller:emailcontroller,
                             keyboardtype: TextInputType.emailAddress,
                             autocorrect: true,
                             icon: Icons.email,
@@ -75,15 +74,13 @@ class _RegisterState extends State<Register> {
                             icon: Icons.lock,
                             obsecureText: true),
                         const SizedBox(height: 30,),
-                        Container(
-                          height: 50,
-                          width: MediaQuery.of(context).size.width,
-                          child: ElevatedButton(
+
+                           ElevatedButton(
                               onPressed: ()async{
                                 if(
                                 Fnamecontroller.text.isEmpty||
                                     Lnamecontroller.text.isEmpty||
-                                    emailconteoller.text.isEmpty||
+                                    emailcontroller.text.isEmpty||
                                     passwordcontoller.text.isEmpty){
                                   ScaffoldMessenger.of(context).showSnackBar(
                                      const  SnackBar(
@@ -98,9 +95,14 @@ class _RegisterState extends State<Register> {
                                   await Authentication().registeruser(
                                       Firstname: Fnamecontroller.text,
                                       Lastname: Lnamecontroller.text,
-                                      Email: emailconteoller.text,
+                                      Email: emailcontroller.text,
                                       password: passwordcontoller.text,
                                     context: context,
+                                  );
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text("Account created Succesfully",
+                                    style: TextStyle(color: Colors.red),
+                                    )),
                                   );
                                 }
                               },
@@ -111,7 +113,7 @@ class _RegisterState extends State<Register> {
                                   ),
                                 ),
                               )),
-                        ),
+
                 TextButton(
                     onPressed: (){
                       Navigator.of(context).pushReplacement(
