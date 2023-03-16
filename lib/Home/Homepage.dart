@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lostfound/Found.dart';
-import 'package:lostfound/Lost.dart';
-import 'package:lostfound/profile.dart';
-import '../Home.dart';
+import 'package:lostfound/Founditems/Found.dart';
+import 'package:lostfound/LostItems/Lost.dart';
+import 'package:lostfound/Home/profile.dart';
+import 'Home.dart';
 class Homepage extends StatefulWidget {
   const Homepage({Key? key}) : super(key: key);
 

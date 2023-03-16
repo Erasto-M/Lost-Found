@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lostfound/profile.dart';
+import 'package:lostfound/Home/profile.dart';
+import 'package:lostfound/LostItems/FetchlostItems.dart';
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -29,10 +30,12 @@ class _HomeState extends State<Home> {
             left: 20,
             right: 20,
           ),
-          child: Column(
-            children: const [
-              Center(child: Text('Welcome user')),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: const [
+                Center(child: Text("Lost Items")),
+              ],
+            ),
           ),
         ),
       ),

@@ -2,6 +2,7 @@
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lostfound/Authentication/Register_screen.dart';
 import 'package:lostfound/Authentication/reusableWidgets1.dart';
+import 'package:lostfound/LostItems/FetchlostItems.dart';
 class Welcome extends StatefulWidget {
   const Welcome({Key? key}) : super(key: key);
 
@@ -82,6 +83,9 @@ class _WelcomeState extends State<Welcome> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               GestureDetector(
+                                onTap: (){
+                                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Fetchlost()));
+                                },
                                 child: Container(
                                   height: 140,
                                   width: 140,
