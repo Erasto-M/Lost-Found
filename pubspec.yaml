@@ -39,6 +39,12 @@ dependencies:
   firebase_core: ^2.7.1
   google_fonts: ^4.0.3
   cloud_firestore: ^4.4.4
+  image_picker: ^0.8.7
+  file_picker: ^5.2.6
+  firebase_storage: ^11.0.15
+  camera: ^0.10.3+2
+  path: ^1.8.2
+  file_upload: ^0.0.3
 
 
 dev_dependencies:

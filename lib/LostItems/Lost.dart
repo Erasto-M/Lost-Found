@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:lostfound/Authentication/reusableWidgets1.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:lostfound/LostItems/FetchlostItems.dart';
+import 'package:lostfound/Imagepic/Imagepick.dart';
 import 'package:lostfound/LostItems/LostitemsAdmin.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart' as storage;
+import 'package:path/path.dart';
 class Lost extends StatefulWidget {
   const Lost({Key? key}) : super(key: key);
 
@@ -11,12 +15,51 @@ class Lost extends StatefulWidget {
 }
 
 class _LostState extends State<Lost> {
+  storage.FirebaseStorage Storage = storage.FirebaseStorage.instance;
+  File? _photo;
+  final ImagePicker _picker = ImagePicker();
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final categorycontroller = TextEditingController();
   final namecontroller = TextEditingController();
   final datecontroller = TextEditingController();
   final locationcontroller = TextEditingController();
   final descrptioncontroller = TextEditingController();
+  Future picfromgallery()async{
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      if(pickedFile != null){
+        _photo = File(pickedFile.path);
+        uploadFile();
+      } else{
+        print("No image selected");
+      }
+    });
+  }
+  Future picFromcamera()async{
+    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+    setState(() {
+      if(pickedFile != null){
+        _photo = File(pickedFile.path);
+        uploadFile();
+      } else{
+        print("No image selected");
+      }
+    });
+  }
+  Future uploadFile()async{
+    if(_photo==null) return;
+    final Filename = basename(_photo!.path);
+    final destination = 'files/$Filename';
+    try{
+      final ref = storage.FirebaseStorage.instance
+          .ref(destination)
+          .child('file/');
+      await ref.putFile(_photo!);
+    }
+    catch(e){
+      print("No file selected");
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,6 +84,52 @@ class _LostState extends State<Lost> {
                 Bigtext(text: "Have you Lost an item and you want to Find it?"),
                 Space(),
                 Smalltext(text: "Fill in the details about the Item in the fields below"),
+                Space(),
+                Center(child: Bigtext(text: "Upload lost Item")),
+                Container(
+                  padding: const  EdgeInsets.only(
+                      top: 40,left: 30,right: 30
+                  ),
+                  child:Column(
+                    children: <Widget>[
+                      const SizedBox(
+                        height: 32,
+                      ),
+                      Center(
+                        child: GestureDetector(
+                          onTap: () {
+                            _showPicker(context);
+                          },
+                          child: CircleAvatar(
+                            radius: 55,
+                            backgroundColor: const Color(0xffFDCF09),
+                            child: _photo != null
+                                ? ClipRRect(
+                              borderRadius: BorderRadius.circular(50),
+                              child: Image.file(
+                                _photo!,
+                                width: 100,
+                                height: 100,
+                                fit: BoxFit.cover,
+                              ),
+                            )
+                                : Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.grey[200],
+                                  borderRadius: BorderRadius.circular(50)),
+                              width: 100,
+                              height: 100,
+                              child: Icon(
+                                Icons.camera_alt,
+                                color: Colors.grey[800],
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
                 const SizedBox(height: 30,),
                  TextFormField(
                    controller: categorycontroller,
@@ -185,5 +274,34 @@ class _LostState extends State<Lost> {
         ),
       ),
     );
+  }
+  void _showPicker(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              child: Wrap(
+                children: <Widget>[
+                  ListTile(
+                      leading: const Icon(Icons.photo_library),
+                      title: const  Text('Gallery'),
+                      onTap: () {
+                        picfromgallery();
+                        Navigator.of(context).pop();
+                      }),
+                  ListTile(
+                    leading:  const Icon(Icons.photo_camera),
+                    title: const Text('Camera'),
+                    onTap: () {
+                      picFromcamera();
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
   }
 }
