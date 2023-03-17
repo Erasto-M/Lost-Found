@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:camera/camera.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_storage/firebase_storage.dart' as storage;
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_upload/file_upload.dart';
 import 'package:path/path.dart';
+
 class Imgpick extends StatefulWidget {
   const Imgpick({Key? key}) : super(key: key);
 
@@ -16,54 +17,63 @@ class Imgpick extends StatefulWidget {
 }
 
 class _ImgpickState extends State<Imgpick> {
-  storage.FirebaseStorage Storage = storage.FirebaseStorage.instance;
+
+  //* the link to the image
+  String? url;
+  FirebaseStorage storage = FirebaseStorage.instance;
   File? _photo;
   final ImagePicker _picker = ImagePicker();
-  Future picfromgallery()async{
+  Future picfromgallery() async {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
     setState(() {
-      if(pickedFile != null){
+      if (pickedFile != null) {
         _photo = File(pickedFile.path);
         uploadFile();
-      } else{
+      } else {
         print("No image selected");
       }
     });
   }
-  Future picFromcamera()async{
+
+  Future picFromcamera() async {
     final pickedFile = await _picker.pickImage(source: ImageSource.camera);
     setState(() {
-      if(pickedFile != null){
+      if (pickedFile != null) {
         _photo = File(pickedFile.path);
         uploadFile();
-      } else{
+      } else {
         print("No image selected");
       }
     });
   }
-  Future uploadFile()async{
-    if(_photo==null) return;
+
+  Future uploadFile() async {
+    if (_photo == null) return;
     final Filename = basename(_photo!.path);
     final destination = 'files/$Filename';
-    try{
-      final ref = storage.FirebaseStorage.instance
-          .ref(destination)
-          .child('file/');
+    try {
+      final ref = FirebaseStorage.instance.ref(destination).child('file/');
       await ref.putFile(_photo!);
-    }
-    catch(e){
+
+      //* get the link to the image
+      await ref.getDownloadURL().then((value) {
+        setState(() {
+          url = value;
+          print(url);
+        });
+      });
+    } catch (e) {
       print("No file selected");
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          padding: const  EdgeInsets.only(
-              top: 40,left: 30,right: 30
-          ),
-          child:Column(
+          padding: const EdgeInsets.only(top: 40, left: 30, right: 30),
+          child: Column(
             children: <Widget>[
               const SizedBox(
                 height: 32,
@@ -106,7 +116,7 @@ class _ImgpickState extends State<Imgpick> {
       ),
     );
   }
-  
+
   void _showPicker(context) {
     showModalBottomSheet(
         context: context,
@@ -117,13 +127,13 @@ class _ImgpickState extends State<Imgpick> {
                 children: <Widget>[
                   ListTile(
                       leading: const Icon(Icons.photo_library),
-                      title: const  Text('Gallery'),
+                      title: const Text('Gallery'),
                       onTap: () {
                         picfromgallery();
                         Navigator.of(context).pop();
                       }),
                   ListTile(
-                    leading:  const Icon(Icons.photo_camera),
+                    leading: const Icon(Icons.photo_camera),
                     title: const Text('Camera'),
                     onTap: () {
                       picFromcamera();

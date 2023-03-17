@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lostfound/Authentication/reusableWidgets1.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:lostfound/Imagepic/Imagepick.dart';
 import 'package:lostfound/LostItems/LostitemsAdmin.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
@@ -17,6 +16,7 @@ class Lost extends StatefulWidget {
 class _LostState extends State<Lost> {
   storage.FirebaseStorage Storage = storage.FirebaseStorage.instance;
   File? _photo;
+  String? url;
   final ImagePicker _picker = ImagePicker();
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final categorycontroller = TextEditingController();
@@ -55,6 +55,12 @@ class _LostState extends State<Lost> {
           .ref(destination)
           .child('file/');
       await ref.putFile(_photo!);
+      await ref.getDownloadURL().then((value) {
+        setState(() {
+          url = value;
+          print(url);
+        });
+      });
     }
     catch(e){
       print("No file selected");
@@ -237,6 +243,7 @@ class _LostState extends State<Lost> {
                         );
                       }else{
                         await firestore.collection('Lost_items').doc().set({
+                          'Image': url,
                           'Category': categorycontroller.text,
                           'Item Name': namecontroller.text,
                           'Mising Date': datecontroller.text.toString(),

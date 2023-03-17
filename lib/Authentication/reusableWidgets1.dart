@@ -17,7 +17,7 @@ Widget Textfield(
     decoration: InputDecoration(
         hoverColor: Colors.blue,
         fillColor: Colors.white,
-        filled: true,
+        filled: false,
         hintText: text,
         prefixIcon: Icon(icon),
         suffixIcon: Icon(iconData),
