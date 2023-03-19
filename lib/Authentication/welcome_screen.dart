@@ -1,5 +1,6 @@
  import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lostfound/Authentication/Login_screen.dart';
 import 'package:lostfound/Authentication/Register_screen.dart';
 import 'package:lostfound/Authentication/reusableWidgets1.dart';
 import 'package:lostfound/LostItems/FetchlostItems.dart';
@@ -124,7 +125,7 @@ class _WelcomeState extends State<Welcome> {
                           GestureDetector(
                             onTap: (){
                               Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(builder: (context)=>Register()));
+                                  MaterialPageRoute(builder: (context)=>const Login()));
                             },
                             child: Container(
                               height: 50,
