@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lostfound/Home/Home.dart';
 import 'package:lostfound/Home/Homepage.dart';
 import 'Authentication/welcome_screen.dart';
 import 'LostItems/Lost.dart';
@@ -23,7 +24,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return  MaterialApp(
-      home: const Welcome(),
+      home: const Homepage(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,

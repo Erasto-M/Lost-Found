@@ -15,13 +15,13 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title:const  Text('Homepage'),
         centerTitle: true,
-        actions: [
-          IconButton(
-              onPressed: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const Profile()));
-              },
-              icon: const Icon(Icons.person,size: 20,)),
-        ],
+        // actions: [
+        //   IconButton(
+        //       onPressed: (){
+        //         Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const Profile()));
+        //       },
+        //       icon: const Icon(Icons.person,size: 20,)),
+        // ],
       ),
       body: SafeArea(
         child: Container(
@@ -38,6 +38,20 @@ class _HomeState extends State<Home> {
             ),
           ),
         ),
+      ),
+      drawer: Drawer(
+        backgroundColor: Colors.cyanAccent.withOpacity(1.0),
+        child: Container(
+          margin:const  EdgeInsets.only(
+            top: 70,
+          ),
+          child: Column(
+            children: const  [
+               Center(child: Text("My Profile",style: TextStyle(fontSize: 35,fontWeight: FontWeight.bold,color: Colors.black),)),
+              Divider(thickness: 2,color: Colors.green,)
+            ],
+          ),
+        )
       ),
     );
   }
