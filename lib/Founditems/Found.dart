@@ -4,8 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lostfound/Founditems/Fetchfoundadmin.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart' as storage;
-import 'package:path/path.dart';
+import 'package:firebase_storage/firebase_storage.dart' ;
+import 'package:path/path.dart' as path;
 class Found extends StatefulWidget {
   const Found({Key? key}) : super(key: key);
 
@@ -14,8 +14,8 @@ class Found extends StatefulWidget {
 }
 
 class _FoundState extends State<Found> {
-  storage.FirebaseStorage Storage = storage.FirebaseStorage.instance;
   File? _photo;
+  String? url;
   final ImagePicker _picker = ImagePicker();
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final categorycontroller = TextEditingController();
@@ -24,40 +24,29 @@ class _FoundState extends State<Found> {
   final locationcontroller = TextEditingController();
   final descrptioncontroller = TextEditingController();
   final usernamecontroleer = TextEditingController();
-  Future picfromgallery()async{
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      if(pickedFile != null){
-        _photo = File(pickedFile.path);
-        uploadFile();
-      } else{
-        print("No image selected");
+  getImage(ImageSource source) async {
+    try {
+      final image = await _picker.pickImage(
+        source: source, imageQuality: 70,);
+      if (image != null) {
+        _photo = File(image.path);
+        setState(() {
+        });
       }
-    });
-  }
-  Future picFromcamera()async{
-    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
-    setState(() {
-      if(pickedFile != null){
-        _photo = File(pickedFile.path);
-        uploadFile();
-      } else{
-        print("No image selected");
-      }
-    });
-  }
-  Future uploadFile()async{
-    if(_photo==null) return;
-    final Filename = basename(_photo!.path);
-    final destination = 'files/$Filename';
-    try{
-      final ref = storage.FirebaseStorage.instance
-          .ref(destination)
-          .child('file/');
-      await ref.putFile(_photo!);
+    } catch (e) {
+      debugPrint(e.toString());
     }
-    catch(e){
-      print("No file selected");
+  }
+  uploadImage(File image) async {
+    try {
+      FirebaseStorage storage = FirebaseStorage.instance;
+      String fileName = path.basename(image.path);
+      Reference ref = storage.ref().child('Found/$fileName');
+      await ref.putFile(image);
+      url = await ref.getDownloadURL();
+      return url;
+    } catch (e) {
+      debugPrint(e.toString());
     }
   }
   @override
@@ -256,6 +245,7 @@ class _FoundState extends State<Found> {
                         );
                       }else{
                         await firestore.collection('Found_Items').doc().set({
+                          'Image': url,
                           'Usernmae': usernamecontroleer.text,
                           'Category': categorycontroller.text,
                           'Item Name': namecontroller.text,
@@ -300,28 +290,30 @@ class _FoundState extends State<Found> {
         context: context,
         builder: (BuildContext bc) {
           return SafeArea(
-            child: Container(
-              child: Wrap(
-                children: <Widget>[
-                  ListTile(
-                      leading: const Icon(Icons.photo_library),
-                      title: const  Text('Gallery'),
-                      onTap: () {
-                        picfromgallery();
-                        Navigator.of(context).pop();
-                      }),
-                  ListTile(
-                    leading:  const Icon(Icons.photo_camera),
-                    title: const Text('Camera'),
-                    onTap: () {
-                      picFromcamera();
+            child: Wrap(
+              children: <Widget>[
+                ListTile(
+                    leading: const Icon(Icons.photo_library),
+                    title: const Text('Gallery'),
+                    onTap: () async {
+                      await getImage(ImageSource.gallery);
+                      await uploadImage(_photo!);
                       Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              ),
+                    }),
+                ListTile(
+                  leading: const Icon(Icons.photo_camera),
+                  title: const Text('Camera'),
+                  onTap: () async {
+                    await getImage(ImageSource.camera).then((value) {
+                      uploadImage(_photo!);
+                    });
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
             ),
           );
         });
   }
-}
+  }
+

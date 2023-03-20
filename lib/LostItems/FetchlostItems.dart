@@ -15,52 +15,6 @@ class Fetchlost extends StatefulWidget {
 }
 
 class _FetchlostState extends State<Fetchlost> {
-  String? url;
-  FirebaseStorage storage = FirebaseStorage.instance;
-  File? _photo;
-
-  final ImagePicker _picker = ImagePicker();
-  Future picfromgallery() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      if (pickedFile != null) {
-        _photo = File(pickedFile.path);
-        uploadFile();
-      } else {
-        print("No image selected");
-      }
-    });
-  }
-  Future picFromcamera() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
-    setState(() {
-      if (pickedFile != null) {
-        _photo = File(pickedFile.path);
-        uploadFile();
-      } else {
-        print("No image selected");
-      }
-    });
-  }
-  Future uploadFile() async {
-    if (_photo == null) return;
-    final Filename = basename(_photo!.path);
-    final destination = 'files/$Filename';
-    try {
-      final ref = FirebaseStorage.instance.ref(destination).child('file/');
-      await ref.putFile(_photo!);
-
-      //* get the link to the image
-      await ref.getDownloadURL().then((value) {
-        setState(() {
-          url = value;
-          print(url);
-        });
-      });
-    } catch (e) {
-      print("No file selected");
-    }
-  }
   final CollectionReference  Lost_items = FirebaseFirestore.instance.collection('Lost_items');
   @override
   Widget build(BuildContext context) {
@@ -122,13 +76,17 @@ class _FetchlostState extends State<Fetchlost> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                           const  Center(
-                              child: CircleAvatar(
-                                radius: 70,
-                                backgroundColor: Colors.white,
-                                backgroundImage: AssetImage('Images/lost.jpg',),
+                            Center(
+                            child: Container(
+                              height: 150,
+                              width: 150,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage(document[Image])),
                               ),
                             ),
+                          ),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [

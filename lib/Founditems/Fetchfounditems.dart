@@ -122,11 +122,15 @@ class _FetchfoundState extends State<Fetchfound> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const  Center(
-                                child: CircleAvatar(
-                                  radius: 70,
-                                  backgroundColor: Colors.white,
-                                  backgroundImage: AssetImage('Images/lost.jpg',),
+                              Center(
+                                child: Container(
+                                  height: 150,
+                                  width: 150,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: document['Image']),
+                                  ),
                                 ),
                               ),
 

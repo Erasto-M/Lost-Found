@@ -194,11 +194,17 @@ class _lostAdminState extends State<lostAdmin> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    const CircleAvatar(
-                                      radius: 70,
-                                      backgroundColor: Colors.white,
-                                      backgroundImage: AssetImage('Images/lost.jpg',),
+                                  Center(
+                                    child: Container(
+                                      height: 150,
+                                      width: 150,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                            image: document['Image']),
+                                      ),
                                     ),
+                                  ),
                                     IconButton(
                                       onPressed: (){
                                         Update(document);
