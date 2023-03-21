@@ -160,7 +160,7 @@ class _lostAdminState extends State<lostAdmin> {
                 children: snapshot.data!.docs.map((DocumentSnapshot document) {
                   return Card(
                     child: Container(
-                      height: 420,
+                      height: 450,
                       width: MediaQuery.of(context).size.width,
                       decoration:  BoxDecoration(
                           borderRadius:const  BorderRadius.only(
@@ -192,31 +192,19 @@ class _lostAdminState extends State<lostAdmin> {
                             children: [
                                Center(
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
                                   Center(
                                     child: Container(
                                       height: 150,
-                                      width: 150,
+                                      width: 310,
                                       decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                            image: document['Image']),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: Image.network(document['Image'],
+                                      fit: BoxFit.fitWidth,
                                       ),
                                     ),
                                   ),
-                                    IconButton(
-                                      onPressed: (){
-                                        Update(document);
-                                      },
-                                      icon:const  Icon(Icons.edit),
-                                    ),
-                                    IconButton(
-                                      onPressed: (){
-                                        delete(document.id);
-                                      },
-                                      icon:const  Icon(Icons.delete,),
-                                    ),
                                   ],
                                 ),
                               ),
@@ -229,6 +217,7 @@ class _lostAdminState extends State<lostAdmin> {
                                   Text(document['Category'],
                                     style: const TextStyle(color: Colors.black54,
                                         fontWeight: FontWeight.normal,fontSize: 20),),
+
                                 ],
                               ),
                               Space(),
@@ -279,6 +268,23 @@ class _lostAdminState extends State<lostAdmin> {
                                         fontWeight: FontWeight.normal,fontSize: 20),),
                                 ],
                               ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  IconButton(
+                                    onPressed: (){
+                                      Update(document);
+                                    },
+                                    icon:const  Icon(Icons.edit),
+                                  ),
+                                  IconButton(
+                                    onPressed: (){
+                                      delete(document.id);
+                                    },
+                                    icon:const  Icon(Icons.delete,),
+                                  ),
+                                ],
+                              )
 
                             ],
                           ),

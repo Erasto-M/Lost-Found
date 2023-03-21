@@ -92,7 +92,7 @@ class _FetchfoundState extends State<Fetchfound> {
                 children: snapshot.data!.docs.map((DocumentSnapshot document) {
                   return Card(
                     child: Container(
-                      height: 420,
+                      height: 550,
                       width: MediaQuery.of(context).size.width,
                       decoration:  BoxDecoration(
                           borderRadius:const  BorderRadius.only(
@@ -125,11 +125,12 @@ class _FetchfoundState extends State<Fetchfound> {
                               Center(
                                 child: Container(
                                   height: 150,
-                                  width: 150,
+                                  width: MediaQuery.of(context).size.width,
                                   decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        image: document['Image']),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: Image.network(document['Image'],
+                                  fit: BoxFit.fitWidth,
                                   ),
                                 ),
                               ),
@@ -141,7 +142,7 @@ class _FetchfoundState extends State<Fetchfound> {
                                       fontSize: 25,fontWeight: FontWeight.bold),),
                                   const SizedBox(width: 20,),
                                   Text(document['Usernmae'],
-                                    style: const TextStyle(color: Colors.white12,
+                                    style: const TextStyle(color: Colors.white70,
                                         fontWeight: FontWeight.normal,fontSize: 20),),
                                 ],
                               ),
@@ -153,7 +154,7 @@ class _FetchfoundState extends State<Fetchfound> {
                                       fontSize: 25,fontWeight: FontWeight.bold),),
                                   const SizedBox(width: 20,),
                                   Text(document['Category'],
-                                    style: const TextStyle(color: Colors.white12,
+                                    style: const TextStyle(color: Colors.white70,
                                         fontWeight: FontWeight.normal,fontSize: 20),),
                                 ],
                               ),
@@ -164,7 +165,7 @@ class _FetchfoundState extends State<Fetchfound> {
                                       fontSize: 25,fontWeight: FontWeight.bold),),
                                   const SizedBox(width: 20,),
                                   Text(document['Item Description'],
-                                    style: const TextStyle(color: Colors.white12,
+                                    style: const TextStyle(color: Colors.white70,
                                         fontWeight: FontWeight.normal,fontSize: 20),),
                                 ],
                               ),
@@ -177,7 +178,7 @@ class _FetchfoundState extends State<Fetchfound> {
                                       fontSize: 25,fontWeight: FontWeight.bold),),
                                   const SizedBox(width: 20,),
                                   Text(document['Item Name'],
-                                    style: const TextStyle(color: Colors.white12,
+                                    style: const TextStyle(color: Colors.white70,
                                         fontWeight: FontWeight.normal,fontSize: 20),),
                                 ],
                               ),
@@ -189,7 +190,7 @@ class _FetchfoundState extends State<Fetchfound> {
                                       fontSize: 25,fontWeight: FontWeight.bold),),
                                   const SizedBox(width: 20,),
                                   Text(document['Location'],
-                                    style: const TextStyle(color: Colors.white12,
+                                    style: const TextStyle(color: Colors.white70,
                                         fontWeight: FontWeight.normal,fontSize: 20),),
                                 ],
                               ),
@@ -201,7 +202,7 @@ class _FetchfoundState extends State<Fetchfound> {
                                       fontSize: 25,fontWeight: FontWeight.bold),),
                                   const SizedBox(width: 20,),
                                   Text(document['Found Date'],
-                                    style: const TextStyle(color: Colors.white12,
+                                    style: const TextStyle(color: Colors.white70,
                                         fontWeight: FontWeight.normal,fontSize: 20),),
                                 ],
                               ),

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:lostfound/Authentication/Register_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lostfound/Home/profile.dart';
 import 'package:lostfound/LostItems/FetchlostItems.dart';
 class Home extends StatefulWidget {
@@ -9,19 +12,13 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final currentUser = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title:const  Text('Homepage'),
         centerTitle: true,
-        // actions: [
-        //   IconButton(
-        //       onPressed: (){
-        //         Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const Profile()));
-        //       },
-        //       icon: const Icon(Icons.person,size: 20,)),
-        // ],
       ),
       body: SafeArea(
         child: Container(
@@ -46,9 +43,9 @@ class _HomeState extends State<Home> {
             top: 70,
           ),
           child: Column(
-            children: const  [
+            children:   [
                Center(child: Text("My Profile",style: TextStyle(fontSize: 35,fontWeight: FontWeight.bold,color: Colors.black),)),
-              Divider(thickness: 2,color: Colors.green,)
+              Divider(thickness: 2,color: Colors.green,),
             ],
           ),
         )

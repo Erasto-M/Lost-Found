@@ -174,7 +174,7 @@ class _FetchAdminState extends State<FetchAdmin> {
                 children: snapshot.data!.docs.map((DocumentSnapshot document) {
                   return Card(
                     child: Container(
-                      height: 450,
+                      height: 550,
                       width: MediaQuery.of(context).size.width,
                       decoration:  BoxDecoration(
                           borderRadius:const  BorderRadius.only(
@@ -206,30 +206,19 @@ class _FetchAdminState extends State<FetchAdmin> {
                             children: [
                               Center(
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Center(
-                                    child: Container(
-                                      height: 150,
-                                      width: 150,
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                            fit: BoxFit.cover,
-                                            image: document['Image']),
+                                      child: Container(
+                                        height: 150,
+                                        width: 310,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(20),
+                                        ),
+                                        child: Image.network(document['Image'],
+                                        fit: BoxFit.fitWidth,
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                    IconButton(
-                                      onPressed: (){
-                                        Update(document);
-                                      },
-                                      icon:const  Icon(Icons.edit),
-                                    ),
-                                    IconButton(
-                                      onPressed: (){
-                                        delete(document.id);
-                                      },
-                                      icon:const  Icon(Icons.delete,),
                                     ),
                                   ],
                                 ),
@@ -244,6 +233,19 @@ class _FetchAdminState extends State<FetchAdmin> {
                                   Text(document['Usernmae'],
                                     style: const TextStyle(color: Colors.white70,
                                         fontWeight: FontWeight.normal,fontSize: 20),),
+                                  SizedBox(width: 5,),
+                                  IconButton(
+                                    onPressed: (){
+                                      Update(document);
+                                    },
+                                    icon:const  Icon(Icons.edit),
+                                  ),
+                                  IconButton(
+                                    onPressed: (){
+                                      delete(document.id);
+                                    },
+                                    icon:const  Icon(Icons.delete,),
+                                  ),
                                 ],
                               ),
                               Space(),
@@ -290,7 +292,7 @@ class _FetchAdminState extends State<FetchAdmin> {
                                       fontSize: 25,fontWeight: FontWeight.bold),),
                                   const SizedBox(width: 20,),
                                   Text(document['Location'],
-                                    style: const TextStyle(color: Colors.white12,
+                                    style: const TextStyle(color: Colors.white70,
                                         fontWeight: FontWeight.normal,fontSize: 20),),
                                 ],
                               ),
