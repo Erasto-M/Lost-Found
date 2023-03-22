@@ -40,16 +40,20 @@ dependencies:
   google_fonts: ^4.0.3
   cloud_firestore: ^4.4.4
   image_picker: ^0.8.7
-  file_picker: ^5.2.6
   firebase_storage: ^11.0.15
   camera: ^0.10.3+2
   path: ^1.8.2
   file_upload: ^0.0.3
+  flutter_datetime_picker: ^1.5.1
+  intl: ^0.17.0
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+flutter icons:
+  android: true
+  image path: "images/lost.jpg"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

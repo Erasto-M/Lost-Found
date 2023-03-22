@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lostfound/Authentication/Login_screen.dart';
 import 'package:lostfound/Authentication/Register_screen.dart';
 import 'package:lostfound/Authentication/reusableWidgets1.dart';
+import 'package:lostfound/Founditems/Fetchfounditems.dart';
 import 'package:lostfound/LostItems/FetchlostItems.dart';
 class Welcome extends StatefulWidget {
   const Welcome({Key? key}) : super(key: key);
@@ -104,20 +105,25 @@ class _WelcomeState extends State<Welcome> {
                                 ),
                               ),
                              const  SizedBox(width: 20,),
-                              Container(
-                                height: 140,
-                                width: 140,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: const Center(child:
-                                  Text("FOUND",
-                                  style: TextStyle(color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
+                              GestureDetector(
+                                onTap: (){
+                                  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const Fetchfound()));
+                                },
+                                child: Container(
+                                  height: 140,
+                                  width: 140,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20),
                                   ),
-                                )),
+                                  child: const Center(child:
+                                    Text("FOUND",
+                                    style: TextStyle(color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                                  )),
+                                ),
                               ),
                             ],
                           ),

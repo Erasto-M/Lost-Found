@@ -161,14 +161,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.4"
-  file_picker:
-    dependency: "direct main"
-    description:
-      name: file_picker
-      sha256: d8e9ca7e5d1983365c277f12c21b4362df6cf659c99af146ad4d04eb33033013
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.2.6"
   file_upload:
     dependency: "direct main"
     description:
@@ -254,14 +246,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_lints:
-    dependency: "direct dev"
+  flutter_datetime_picker:
+    dependency: "direct main"
     description:
-      name: flutter_lints
-      sha256: aeb0b80a8b3709709c9cc496cdc027c5b3216796bc0af0ce1007eaf24464fd4c
+      name: flutter_datetime_picker
+      sha256: "8e695c63c769350e541951227c2775190ec73ceda774a315b1dc9a99d5facfe5"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.1"
+    version: "1.5.1"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -345,7 +337,7 @@ packages:
     source: hosted
     version: "2.6.3"
   intl:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: intl
       sha256: "910f85bce16fb5c6f614e117efa303e85a1731bb0081edf3604a2ae6e9a3cc91"
@@ -360,14 +352,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.5"
-  lints:
-    dependency: transitive
-    description:
-      name: lints
-      sha256: "5e4a9cd06d447758280a8ac2405101e0e2094d2a1dbdd3756aec3fe7775ba593"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.1"
   matcher:
     dependency: transitive
     description:

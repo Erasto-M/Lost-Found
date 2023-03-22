@@ -3,7 +3,7 @@
    <application
         android:label="lostfound"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/lost">
         <activity
             android:name=".MainActivity"
             android:exported="true"

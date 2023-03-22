@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:lostfound/Home/Home.dart';
 import 'package:lostfound/Home/Homepage.dart';
 import 'Authentication/welcome_screen.dart';
+import 'LostItems/Lost.dart';
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';

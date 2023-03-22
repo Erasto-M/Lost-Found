@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lostfound/Authentication/reusableWidgets1.dart';
@@ -70,13 +72,18 @@ class _FetchlostState extends State<Fetchlost> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                           const  Center(
-                              child: CircleAvatar(
-                                radius: 70,
-                                backgroundColor: Colors.white,
-                                backgroundImage: AssetImage('Images/lost.jpg',),
-                              ),
+                            Center(
+                            child: Container(
+                              height: 150,
+                              width: MediaQuery.of(context).size.width,
+                             decoration: BoxDecoration(
+                               borderRadius: BorderRadius.circular(20),
+                             ),
+                             child:Image.network(document['Image'],
+                             fit: BoxFit.cover,
+                             )
                             ),
+                          ),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
