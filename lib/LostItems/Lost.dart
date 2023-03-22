@@ -30,10 +30,10 @@ class _LostState extends State<Lost> {
   getImage(ImageSource source) async {
     try {
       final image = await _picker.pickImage(
-        source: source, imageQuality: 70,);
+          source: source, imageQuality: 70,);
       if (image != null) {
         _photo = File(image.path);
-        setState(() {
+        setState(() {     
         });
       }
     } catch (e) {
@@ -81,7 +81,7 @@ class _LostState extends State<Lost> {
                 Space(),
                 Smalltext(
                     text:
-                    "Fill in the details about the Item in the fields below"),
+                        "Fill in the details about the Item in the fields below"),
                 Space(),
                 Center(child: Bigtext(text: "Upload lost Item")),
                 Container(
@@ -101,26 +101,26 @@ class _LostState extends State<Lost> {
                             backgroundColor: const Color(0xffFDCF09),
                             child: _photo != null
                                 ? ClipRRect(
-                              borderRadius: BorderRadius.circular(50),
-                              child: Image.file(
-                                _photo!,
-                                width: 100,
-                                height: 100,
-                                fit: BoxFit.cover,
-                              ),
-                            )
+                                    borderRadius: BorderRadius.circular(50),
+                                    child: Image.file(
+                                      _photo!,
+                                      width: 100,
+                                      height: 100,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  )
                                 : Container(
-                              decoration: BoxDecoration(
-                                  color: Colors.grey[200],
-                                  borderRadius:
-                                  BorderRadius.circular(50)),
-                              width: 100,
-                              height: 100,
-                              child: Icon(
-                                Icons.camera_alt,
-                                color: Colors.grey[800],
-                              ),
-                            ),
+                                    decoration: BoxDecoration(
+                                        color: Colors.grey[200],
+                                        borderRadius:
+                                            BorderRadius.circular(50)),
+                                    width: 100,
+                                    height: 100,
+                                    child: Icon(
+                                      Icons.camera_alt,
+                                      color: Colors.grey[800],
+                                    ),
+                                  ),
                           ),
                         ),
                       )

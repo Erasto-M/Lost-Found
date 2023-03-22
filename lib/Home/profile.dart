@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lostfound/Authentication/reusableWidgets1.dart';
@@ -9,7 +10,6 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  final CollectionReference Users = FirebaseFirestore.instance.collection('Users');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +19,7 @@ class _ProfileState extends State<Profile> {
         centerTitle: true,
       ),
       body: StreamBuilder<QuerySnapshot>(
-          stream: Users.snapshots(),
+          stream: FirebaseFirestore.instance.collection('Users').where("id", isEqualTo: FirebaseAuth.instance.currentUser!.uid).snapshots(),
           builder:(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
             if(snapshot.hasError){
               return const Text("There is an error");
