@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -8,7 +7,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:lostfound/Authentication/Auth.dart';
 import 'package:lostfound/Authentication/Login_screen.dart';
 import 'package:lostfound/Authentication/reusableWidgets1.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:path/path.dart'as path;
+import 'package:intl/intl.dart';
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
 
@@ -152,6 +153,8 @@ class _RegisterState extends State<Register> {
 
                            ElevatedButton(
                               onPressed: ()async{
+                                var user;
+                                var userid = await FirebaseAuth.instance.currentUser;
                                 if(
                                 Fnamecontroller.text.isEmpty||
                                     Lnamecontroller.text.isEmpty||
@@ -169,13 +172,14 @@ class _RegisterState extends State<Register> {
                                   );
                                 }
                                 else{
-                                  await firestore.collection('Users').doc().set({
+                                  await firestore.collection('Users').doc(userid?.uid).set({
                                     'Image': url,
                                     'Firstname': Fnamecontroller.text,
                                     'Lastname': Lnamecontroller.text,
                                     'Email': emailcontroller.text,
                                     'Registration Date':datecontroller.text.toString(),
                                     'PhoneNumber': phonenumber.text.toString(),
+                                    'UserId': user.uid,
                                   });
                                   await Authentication().registeruser(
                                       Firstname: Fnamecontroller.text,

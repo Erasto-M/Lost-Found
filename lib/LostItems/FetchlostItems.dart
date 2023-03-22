@@ -3,10 +3,6 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lostfound/Authentication/reusableWidgets1.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:path/path.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:file_upload/file_upload.dart';
 class Fetchlost extends StatefulWidget {
   const Fetchlost({Key? key}) : super(key: key);
 
@@ -79,12 +75,13 @@ class _FetchlostState extends State<Fetchlost> {
                             Center(
                             child: Container(
                               height: 150,
-                              width: 150,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: NetworkImage(document[Image])),
-                              ),
+                              width: MediaQuery.of(context).size.width,
+                             decoration: BoxDecoration(
+                               borderRadius: BorderRadius.circular(20),
+                             ),
+                             child:Image.network(document['Image'],
+                             fit: BoxFit.cover,
+                             )
                             ),
                           ),
                             Row(
