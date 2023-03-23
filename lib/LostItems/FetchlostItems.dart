@@ -39,6 +39,7 @@ class _FetchlostState extends State<Fetchlost> {
               );
             }
             return ListView(
+              scrollDirection: Axis.horizontal,
               children: snapshot.data!.docs.map((DocumentSnapshot document) {
                 return Card(
                   child: Container(
@@ -57,6 +58,7 @@ class _FetchlostState extends State<Fetchlost> {
                         colors: [
                           Colors.blue.withOpacity(0.6),
                           Colors.blueAccent.withOpacity(0.4),
+                          Colors.deepPurpleAccent.withOpacity(0.6),
                         ]
                       )
                     ),

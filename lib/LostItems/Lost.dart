@@ -1,5 +1,6 @@
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:lostfound/Authentication/reusableWidgets1.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lostfound/LostItems/LostitemsAdmin.dart';
@@ -166,19 +167,32 @@ class _LostState extends State<Lost> {
                 const SizedBox(
                   height: 10,
                 ),
-                TextFormField(
-                  controller: datecontroller,
-                  keyboardType: TextInputType.datetime,
-                  maxLines: 1,
-                  maxLength: 10,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          width: 2,
-                          color: Colors.green,
-                        ),
-                        borderRadius: BorderRadius.circular(10)),
-                    label: const Text("Missing Date"),
+                Container(
+                  child: TextField(
+                    controller: datecontroller,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      labelText: "Select mising date",
+                      prefixIcon: Icon(Icons.calendar_today),
+                    ),
+                    readOnly: true,
+                    onTap: ()async{
+                      DateTime? pickeddate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(1900),
+                          lastDate: DateTime(2200));
+                      if(pickeddate!=null){
+                        String dateformat = DateFormat("dd - MM - yyyy").format(pickeddate);
+                        setState(() {
+                          datecontroller.text = dateformat.toString();
+                        });
+                      }else{
+                        print("No date selected");
+                      }
+                    },
                   ),
                 ),
                 const SizedBox(
@@ -205,8 +219,8 @@ class _LostState extends State<Lost> {
                 TextFormField(
                   controller: descrptioncontroller,
                   keyboardType: TextInputType.text,
-                  maxLines: 4,
-                  maxLength: 100,
+                  maxLines: 6,
+                  maxLength: 500,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderSide: const BorderSide(

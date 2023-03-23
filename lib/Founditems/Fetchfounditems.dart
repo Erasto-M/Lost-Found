@@ -92,7 +92,7 @@ class _FetchfoundState extends State<Fetchfound> {
                 children: snapshot.data!.docs.map((DocumentSnapshot document) {
                   return Card(
                     child: Container(
-                      height: 550,
+                      height: 750,
                       width: MediaQuery.of(context).size.width,
                       decoration:  BoxDecoration(
                           borderRadius:const  BorderRadius.only(
@@ -129,7 +129,7 @@ class _FetchfoundState extends State<Fetchfound> {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(20),
                                   ),
-                                  child: Image.network(document['Image'],
+                                  child: Image.network(document['IMAGE'],
                                   fit: BoxFit.fitWidth,
                                   ),
                                 ),

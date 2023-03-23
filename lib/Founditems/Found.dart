@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:lostfound/Authentication/reusableWidgets1.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lostfound/Founditems/Fetchfoundadmin.dart';
@@ -172,20 +173,32 @@ class _FoundState extends State<Found> {
                   ),
                 ),
                 const SizedBox(height: 10,),
-                TextFormField(
-                  controller: datecontroller,
-                  keyboardType: TextInputType.datetime,
-                  maxLines: 1,
-                  maxLength: 10,
-                  decoration:  InputDecoration(
-                    border: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          width: 2,
-                          color: Colors.green,
-                        ),
-                        borderRadius: BorderRadius.circular(10)
+                Container(
+                  child: TextField(
+                    controller: datecontroller,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      labelText: "Select Date found",
+                      prefixIcon: Icon(Icons.calendar_today),
                     ),
-                    label: const Text("Date Found"),
+                    readOnly: true,
+                    onTap: ()async{
+                      DateTime? pickeddate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(1900),
+                          lastDate: DateTime(2200));
+                      if(pickeddate!=null){
+                        String dateformat = DateFormat("dd - MM - yyyy").format(pickeddate);
+                        setState(() {
+                          datecontroller.text = dateformat.toString();
+                        });
+                      }else{
+                        print("No date selected");
+                      }
+                    },
                   ),
                 ),
                 const SizedBox(height: 10,),
@@ -210,7 +223,7 @@ class _FoundState extends State<Found> {
                   controller: descrptioncontroller,
                   keyboardType: TextInputType.text,
                   maxLines: 2,
-                  maxLength: 20,
+                  maxLength: 30,
                   decoration:  InputDecoration(
                     border: OutlineInputBorder(
                         borderSide: const BorderSide(
@@ -245,7 +258,7 @@ class _FoundState extends State<Found> {
                         );
                       }else{
                         await firestore.collection('Found_Items').doc().set({
-                          'Image': url,
+                          'IMAGE': url,
                           'Usernmae': usernamecontroleer.text,
                           'Category': categorycontroller.text,
                           'Item Name': namecontroller.text,
