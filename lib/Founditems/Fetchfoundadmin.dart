@@ -232,7 +232,7 @@ class _FetchAdminState extends State<FetchAdmin> {
                                   const Text("Found by:", style: TextStyle(color: Colors.white,
                                       fontSize: 25,fontWeight: FontWeight.bold),),
                                   const SizedBox(width: 20,),
-                                  Text(document['Usernmae'],
+                                  Text(document['Username'],
                                     style: const TextStyle(color: Colors.white70,
                                         fontWeight: FontWeight.normal,fontSize: 20),),
                                 ],

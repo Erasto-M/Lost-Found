@@ -22,6 +22,9 @@ class _LostState extends State<Lost> {
   final datecontroller = TextEditingController();
   final locationcontroller = TextEditingController();
   final descrptioncontroller = TextEditingController();
+  final phonenumbercontoller = TextEditingController();
+  final ownercontroller = TextEditingController();
+  final emailcontroller = TextEditingController();
   //* the link to the image
   String? url;
   File? _photo;
@@ -84,6 +87,75 @@ class _LostState extends State<Lost> {
                     text:
                         "Fill in the details about the Item in the fields below"),
                 Space(),
+                TextFormField(
+                  controller: ownercontroller,
+                  keyboardType: TextInputType.text,
+                  validator: (value){
+                    if(value!.isEmpty){
+                      return " please Enter  your name";
+                    } else{
+                      return null;
+                    }
+                  },
+                  maxLines: 1,
+                  maxLength: 20,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          width: 2,
+                          color: Colors.green,
+                        ),
+                        borderRadius: BorderRadius.circular(10)),
+                    label: const Text("Owner Name"),
+                  ),
+                ),
+                SizedBox(height: 10,),
+                TextFormField(
+                  controller: emailcontroller,
+                  validator: (value){
+                    if(value!.isEmpty || !value.contains("@") ){
+                      return "Enter a valid email Adress";
+                    } else{
+                      return null;
+                    }
+                  },
+                  keyboardType: TextInputType.emailAddress,
+                  maxLines: 1,
+                  maxLength: 25,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          width: 2,
+                          color: Colors.green,
+                        ),
+                        borderRadius: BorderRadius.circular(10)),
+                    label: const Text("Owner Email Address"),
+                  ),
+                ),
+                SizedBox(height: 10,),
+                TextFormField(
+                  controller: phonenumbercontoller,
+                  keyboardType: TextInputType.number,
+                  validator: (value){
+                    if(value!.isEmpty || value.length < 10){
+                      return "please enter a valid  phonenumber";
+                    } else{
+                      return null;
+                    }
+                  },
+                  maxLines: 1,
+                  maxLength: 20,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          width: 2,
+                          color: Colors.green,
+                        ),
+                        borderRadius: BorderRadius.circular(10)),
+                    label: const Text("Owner Phonenumber"),
+                  ),
+                ),
+                SizedBox(height: 10,),
                 Center(child: Bigtext(text: "Upload lost Item")),
                 Container(
                   padding: const EdgeInsets.only(top: 40, left: 30, right: 30),
@@ -198,6 +270,10 @@ class _LostState extends State<Lost> {
                 const SizedBox(
                   height: 10,
                 ),
+
+                const SizedBox(
+                  height: 10,
+                ),
                 TextFormField(
                   controller: locationcontroller,
                   keyboardType: TextInputType.text,
@@ -242,7 +318,10 @@ class _LostState extends State<Lost> {
                       if (categorycontroller.text.isEmpty ||
                           namecontroller.text.isEmpty ||
                           datecontroller.text.isEmpty ||
+                          phonenumbercontoller.text.isEmpty||
                           locationcontroller.text.isEmpty ||
+                          emailcontroller.text.isEmpty||
+                          ownercontroller.text.isEmpty||
                           descrptioncontroller.text.isEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
@@ -260,6 +339,9 @@ class _LostState extends State<Lost> {
                           'Mising Date': datecontroller.text.toString(),
                           'Location': locationcontroller.text,
                           "Item Description": descrptioncontroller.text,
+                          "Phonenumber": phonenumbercontoller.text.toString(),
+                          "Owner": ownercontroller.text,
+                          "Email": emailcontroller.text,
                         });
                       }
                     },
