@@ -160,7 +160,7 @@ class _lostAdminState extends State<lostAdmin> {
                 children: snapshot.data!.docs.map((DocumentSnapshot document) {
                   return Card(
                     child: Container(
-                      height: 450,
+                      height: 650,
                       width: MediaQuery.of(context).size.width,
                       decoration:  BoxDecoration(
                           borderRadius:const  BorderRadius.only(
@@ -173,8 +173,11 @@ class _lostAdminState extends State<lostAdmin> {
                               begin: Alignment.bottomLeft,
                               end: Alignment.topRight,
                               colors: [
-                                Colors.blue.withOpacity(0.6),
-                                Colors.blueAccent.withOpacity(0.4),
+                                Colors.blue.withOpacity(1.0),
+                                Colors.blueAccent.withOpacity(1.0),
+                                Colors.deepPurpleAccent.withOpacity(1.0),
+                                Colors.cyanAccent.withOpacity(1.0),
+
                               ]
                           )
                       ),
@@ -195,7 +198,7 @@ class _lostAdminState extends State<lostAdmin> {
                                   children: [
                                   Center(
                                     child: Container(
-                                      height: 150,
+                                      height: 200,
                                       width: 310,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(20),
@@ -275,13 +278,14 @@ class _lostAdminState extends State<lostAdmin> {
                                     onPressed: (){
                                       Update(document);
                                     },
-                                    icon:const  Icon(Icons.edit),
+                                    icon:const  Icon(Icons.edit,size: 30,color: Colors.white,),
                                   ),
+                                  Expanded(child: Container()),
                                   IconButton(
                                     onPressed: (){
                                       delete(document.id);
                                     },
-                                    icon:const  Icon(Icons.delete,),
+                                    icon:const  Icon(Icons.delete,size: 30,color: Colors.white,),
                                   ),
                                 ],
                               )

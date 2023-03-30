@@ -53,6 +53,11 @@ class _RegisterState extends State<Register> {
 
   }
   @override
+  void initstate(){
+    super.initState();
+    datecontroller.text = '';
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -134,13 +139,34 @@ class _RegisterState extends State<Register> {
                             icon: Icons.dialpad,
                             obsecureText: false),
                         Space(),
-                        Textfield(
-                            text: "Registration date",
-                            controller: datecontroller,
-                            keyboardtype: TextInputType.text,
-                            autocorrect: false,
-                            icon: Icons.calendar_today,
-                            obsecureText: false),
+                Container(
+                  child: TextField(
+                    controller: datecontroller,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      labelText: "Select date",
+                      prefixIcon: Icon(Icons.calendar_today),
+                    ),
+                    readOnly: true,
+                    onTap: ()async{
+                      DateTime? pickeddate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(1900),
+                          lastDate: DateTime(2200));
+                      if(pickeddate!=null){
+                        String dateformat = DateFormat("dd - MM - yyyy").format(pickeddate);
+                        setState(() {
+                          datecontroller.text = dateformat.toString();
+                        });
+                      }else{
+                        print("No date selected");
+                      }
+                    },
+                  ),
+                ),
                         Space(),
                         Textfield(
                             text: 'Password',
@@ -153,8 +179,6 @@ class _RegisterState extends State<Register> {
 
                            ElevatedButton(
                               onPressed: ()async{
-                                var user;
-                                var userid = await FirebaseAuth.instance.currentUser;
                                 if(
                                 Fnamecontroller.text.isEmpty||
                                     Lnamecontroller.text.isEmpty||
@@ -172,14 +196,13 @@ class _RegisterState extends State<Register> {
                                   );
                                 }
                                 else{
-                                  await firestore.collection('Users').doc(userid?.uid).set({
-                                    'Image': url,
+                                  await firestore.collection('Users').doc().set({
+                                    'Images': url,
                                     'Firstname': Fnamecontroller.text,
                                     'Lastname': Lnamecontroller.text,
                                     'Email': emailcontroller.text,
                                     'Registration Date':datecontroller.text.toString(),
                                     'PhoneNumber': phonenumber.text.toString(),
-                                    'UserId': user.uid,
                                   });
                                   await Authentication().registeruser(
                                       Firstname: Fnamecontroller.text,

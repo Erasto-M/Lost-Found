@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:lostfound/Authentication/reusableWidgets1.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lostfound/Founditems/Fetchfoundadmin.dart';
@@ -22,6 +23,8 @@ class _FoundState extends State<Found> {
   final namecontroller = TextEditingController();
   final datecontroller = TextEditingController();
   final locationcontroller = TextEditingController();
+  final emailcontroller = TextEditingController();
+  final Phonenumbercontroller = TextEditingController();
   final descrptioncontroller = TextEditingController();
   final usernamecontroleer = TextEditingController();
   getImage(ImageSource source) async {
@@ -78,7 +81,7 @@ class _FoundState extends State<Found> {
                   controller: usernamecontroleer,
                   keyboardType: TextInputType.text,
                   maxLines: 1,
-                  maxLength: 10,
+                  maxLength: 20,
                   decoration:  InputDecoration(
                     border: OutlineInputBorder(
                         borderSide: const BorderSide(
@@ -88,6 +91,39 @@ class _FoundState extends State<Found> {
                         borderRadius: BorderRadius.circular(10)
                     ),
                     label: const Text("Your Name"),
+                  ),
+                ),
+                TextFormField(
+                  controller: Phonenumbercontroller,
+                  keyboardType: TextInputType.number,
+                  maxLines: 1,
+                  maxLength: 20,
+                  decoration:  InputDecoration(
+                    border: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          width: 2,
+                          color: Colors.green,
+                        ),
+                        borderRadius: BorderRadius.circular(10)
+                    ),
+                    label: const Text("Your PhoneNumber"),
+                  ),
+                ),
+                Space(),
+                TextFormField(
+                  controller: emailcontroller,
+                  keyboardType: TextInputType.emailAddress,
+                  maxLines: 1,
+                  maxLength: 30,
+                  decoration:  InputDecoration(
+                    border: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          width: 2,
+                          color: Colors.green,
+                        ),
+                        borderRadius: BorderRadius.circular(10)
+                    ),
+                    label: const Text("Your Email address"),
                   ),
                 ),
                 Space(),
@@ -172,20 +208,32 @@ class _FoundState extends State<Found> {
                   ),
                 ),
                 const SizedBox(height: 10,),
-                TextFormField(
-                  controller: datecontroller,
-                  keyboardType: TextInputType.datetime,
-                  maxLines: 1,
-                  maxLength: 10,
-                  decoration:  InputDecoration(
-                    border: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          width: 2,
-                          color: Colors.green,
-                        ),
-                        borderRadius: BorderRadius.circular(10)
+                Container(
+                  child: TextField(
+                    controller: datecontroller,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      labelText: "Select Date found",
+                      prefixIcon: Icon(Icons.calendar_today),
                     ),
-                    label: const Text("Date Found"),
+                    readOnly: true,
+                    onTap: ()async{
+                      DateTime? pickeddate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(1900),
+                          lastDate: DateTime(2200));
+                      if(pickeddate!=null){
+                        String dateformat = DateFormat("dd - MM - yyyy").format(pickeddate);
+                        setState(() {
+                          datecontroller.text = dateformat.toString();
+                        });
+                      }else{
+                        print("No date selected");
+                      }
+                    },
                   ),
                 ),
                 const SizedBox(height: 10,),
@@ -210,7 +258,7 @@ class _FoundState extends State<Found> {
                   controller: descrptioncontroller,
                   keyboardType: TextInputType.text,
                   maxLines: 2,
-                  maxLength: 20,
+                  maxLength: 30,
                   decoration:  InputDecoration(
                     border: OutlineInputBorder(
                         borderSide: const BorderSide(
@@ -230,9 +278,12 @@ class _FoundState extends State<Found> {
                     onPressed: ()async{
                       if(
                       categorycontroller.text.isEmpty||
+                          url.toString().isEmpty||
                           usernamecontroleer.text.isEmpty||
                           namecontroller.text.isEmpty||
                           datecontroller.text.isEmpty||
+                          emailcontroller.text.isEmpty||
+                          Phonenumbercontroller.text.isEmpty||
                           locationcontroller.text.isEmpty||
                           descrptioncontroller.text.isEmpty
                       ){
@@ -245,13 +296,15 @@ class _FoundState extends State<Found> {
                         );
                       }else{
                         await firestore.collection('Found_Items').doc().set({
-                          'Image': url,
-                          'Usernmae': usernamecontroleer.text,
+                          'IMAGE': url,
+                          'Username': usernamecontroleer.text,
                           'Category': categorycontroller.text,
                           'Item Name': namecontroller.text,
                           'Found Date': datecontroller.text.toString(),
                           'Location': locationcontroller.text,
                           "Item Description": descrptioncontroller.text,
+                          "Email":emailcontroller.text,
+                          "Phonenumber": Phonenumbercontroller.text.toString(),
                         });
                       }
 
