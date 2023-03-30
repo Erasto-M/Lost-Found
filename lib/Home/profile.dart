@@ -16,52 +16,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  // String? url;
-  // FirebaseStorage storage = FirebaseStorage.instance;
-  // File? _photo;
-  //
-  // final ImagePicker _picker = ImagePicker();
-  // Future picfromgallery() async {
-  //   final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-  //   setState(() {
-  //     if (pickedFile != null) {
-  //       _photo = File(pickedFile.path);
-  //       uploadFile();
-  //     } else {
-  //       print("No image selected");
-  //     }
-  //   });
-  // }
-  // Future picFromcamera() async {
-  //   final pickedFile = await _picker.pickImage(source: ImageSource.camera);
-  //   setState(() {
-  //     if (pickedFile != null) {
-  //       _photo = File(pickedFile.path);
-  //       uploadFile();
-  //     } else {
-  //       print("No image selected");
-  //     }
-  //   });
-  // }
-  // Future uploadFile() async {
-  //   if (_photo == null) return;
-  //   final Filename = basename(_photo!.path);
-  //   final destination = 'files/$Filename';
-  //   try {
-  //     final ref = FirebaseStorage.instance.ref(destination).child('file/');
-  //     await ref.putFile(_photo!);
-  //
-  //     //* get the link to the image
-  //     await ref.getDownloadURL().then((value) {
-  //       setState(() {
-  //         url = value;
-  //         print(url);
-  //       });
-  //     });
-  //   } catch (e) {
-  //     print("No file selected");
-  //   }
-  // }
+
   final CollectionReference  Users = FirebaseFirestore.instance.collection('Users');
   @override
   Widget build(BuildContext context) {
@@ -79,8 +34,8 @@ class _ProfileState extends State<Profile> {
           right: 10,
         ),
         child: StreamBuilder<QuerySnapshot>(
-          stream: Users.snapshots(),
-            //stream: FirebaseFirestore.instance.collection('Users').where("uid", isEqualTo: FirebaseAuth.instance.currentUser!.uid).snapshots(),
+          //stream: Users.snapshots(),
+            stream: FirebaseFirestore.instance.collection('Users').where("uid", isEqualTo: FirebaseAuth.instance.currentUser!.uid).snapshots(),
             builder:(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
               if(snapshot.hasError){
                 return const Text("There is an error");
